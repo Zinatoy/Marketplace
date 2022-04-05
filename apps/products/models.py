@@ -33,7 +33,7 @@ class Product(models.Model):
     rating = models.IntegerField()
     description = models.TextField()
     count = models.IntegerField()
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='product_category')
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -47,9 +47,20 @@ class ProductImage(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="product_image", null=True)
     product_image = models.ImageField(upload_to = "product_image/", null = True, blank = True)
 
-    def __str__(self):
-        return self.product_image
 
     class Meta:
         verbose_name = "Картинка продукта"
         verbose_name_plural = "Картинки продуктов"
+
+class Discount(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="product_discount")
+    description = models.TextField()
+    how_many_discount = models.CharField(max_length=100)
+    date = models.DateTimeField()
+
+    def __str__(self):
+        return self.description
+
+    class Meta:
+        verbose_name = "Скидка"
+        verbose_name_plural = "Скидки"
