@@ -244,7 +244,7 @@
                                     </div>
                                     <div class="col">
                                         <div class="product__details--info">
-                                            <form action="product-left-sidebar.html#">
+                                            
                                                 <h2 class="product__details--info__title mb-15">{{ product.title }}</h2>
                                                 <div class="product__details--info__price mb-10">
                                                     <span class="current__price">{{ product.price }} сом</span>
@@ -304,11 +304,34 @@
                                                     </div>
                                                     <div class="product__variant--list mb-15">
                                                         <a class="variant__wishlist--icon mb-15" href="wishlist.html" title="Add to wishlist">
+                                                            {{ product.likes_product.all.count }} человеку понравилось
+                                                        </a>
+                                                        
+                                                    </div>
+                                                    <div class="product__variant--list mb-15">
+                                                        <a class="variant__wishlist--icon mb-15" href="wishlist.html" title="Add to wishlist">
                                                             <svg class="quickview__variant--wishlist__svg" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 512 512"><path d="M352.92 80C288 80 256 144 256 144s-32-64-96.92-64c-52.76 0-94.54 44.14-95.08 96.81-1.1 109.33 86.73 187.08 183 252.42a16 16 0 0018 0c96.26-65.34 184.09-143.09 183-252.42-.54-52.67-42.32-96.81-95.08-96.81z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/></svg>
                                                             Add to Wishlist
                                                         </a>
-                                                        <button class="variant__buy--now__btn primary__btn" type="submit">Buy it now</button>
+                                                        
                                                     </div>
+                                                    <div class="product__variant--list mb-15">
+                                                        {% if user.is_authenticated %}
+                                                        <form method="post">
+                                                           {% csrf_token %}
+                                                           <input type="hidden" name="like">
+                                                           <button type="submit" class="account__details--footer__btn" style = "margin-top: 10px">Понравилось</button>
+                                                       </form>
+                                                       {% endif %}
+                                                     </div>
+                                                    {% if user.is_superuser %}
+                                                    <div class="product__variant--list mb-15">
+                                                        <a href = "{% url 'product_update' product.id %}" class="variant__buy--now__btn primary__btn">Обновить товар</a>
+                                                    </div>
+                                                    <div class="product__variant--list mb-15">
+                                                        <button class="variant__buy--now__btn primary__btn" type="submit">Удалить товар</button>
+                                                    </div>
+                                                    {% endif %}
                                                     <div class="product__variant--list mb-15">
                                                         <div class="product__details--info__meta">
                                                             <p class="product__details--info__meta--list"><strong>Процессор:</strong>  <span>{{ product.cpu }}</span> </p>
@@ -364,7 +387,7 @@
                                                     <h5 class="guarantee__safe--checkout__title">Guaranteed Safe Checkout</h5>
                                                     <img class="guarantee__safe--checkout__img" src="{% static 'assets/img/other/safe-checkout.webp' %} " alt="Payment Image">
                                                 </div>
-                                            </form>
+                                           
                                         </div>
                                     </div>
                                 </div>
@@ -372,51 +395,17 @@
                             <!-- Start product details tab section -->
                             <div class="product__details--tab__section sidebar__tab--section border-radius-10">
                                 <ul class="product__details--tab d-flex mb-30">
-                                    <li class="product__details--tab__list active" data-toggle="tab" data-target="#description">Description</li>
-                                    <li class="product__details--tab__list" data-toggle="tab" data-target="#reviews">Product Reviews</li>
+                                    <li class="product__details--tab__list" data-toggle="tab" data-target="#reviews">Отзывы</li>
                                     <li class="product__details--tab__list" data-toggle="tab" data-target="#information">Additional Info</li>
                                     <li class="product__details--tab__list" data-toggle="tab" data-target="#custom">Custom Content</li>
                                 </ul>
                                 <div class="product__details--tab__inner border-radius-10">
                                     <div class="tab_content">
-                                        <div id="description" class="tab_pane active show">
-                                            <div class="product__tab--content">
-                                                <div class="product__tab--content__items style2 mb-40 d-flex align-items-center">
-                                                    <div class="product__tab--content__thumbnail style2">
-                                                        <img class="product__tab--content__thumbnail--img display-block" src="assets/img/product/product1.webp" alt="product-tab">
-                                                    </div>
-                                                    <div class="product__tab--content__right style2">
-                                                        <div class="product__tab--content__step mb-20">
-                                                            <h4 class="product__tab--content__title">Modern Swivel Chair</h4>
-                                                            <p class="product__tab--content__desc">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nam provident sequi, nemo sapiente culpa nostrum rem eum perferendis quibusdam, magnam a vitae corporis! Magnam enim modi, illo harum suscipit tempore aut dolore doloribus deserunt voluptatum illum,</p>
-                                                        </div>
-                                                        <div class="product__tab--content__step">
-                                                            <h4 class="product__tab--content__title">Fashion Plastic Chair</h4>
-                                                            <p class="product__tab--content__desc">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nam provident sequi, nemo sapiente culpa nostrum rem eum perferendis quibusdam, magnam a vitae corporis! Magnam enim modi, illo harum suscipit tempore aut dolore doloribus deserunt voluptatum illum,</p>
-                                                        </div>
-                                                    </div>
-                                                </div> 
-                                                <div class="product__tab--content__items style2 d-flex align-items-center">
-                                                    <div class="product__tab--content__thumbnail style2">
-                                                        <img class="product__tab--content__thumbnail--img display-block" src="assets/img/product/product2.webp" alt="product-tab">
-                                                    </div>
-                                                    <div class="product__tab--content__right style2">
-                                                        <div class="product__tab--content__step mb-20">
-                                                            <h4 class="product__tab--content__title">Design Living Sofa</h4>
-                                                            <p class="product__tab--content__desc">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nam provident sequi, nemo sapiente culpa nostrum rem eum perferendis quibusdam, magnam a vitae corporis! Magnam enim modi, illo harum suscipit tempore aut dolore doloribus deserunt voluptatum illum,</p>
-                                                        </div>
-                                                        <div class="product__tab--content__step">
-                                                            <h4 class="product__tab--content__title">Folding Tables Chairs</h4>
-                                                            <p class="product__tab--content__desc">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nam provident sequi, nemo sapiente culpa nostrum rem eum perferendis quibusdam, magnam a vitae corporis! Magnam enim modi, illo harum suscipit tempore aut dolore doloribus deserunt voluptatum illum,</p>
-                                                        </div>
-                                                    </div>
-                                                </div> 
-                                            </div> 
-                                        </div>
-                                        <div id="reviews" class="tab_pane">
+                                       
+                                        <div id="reviews" class="tab_pane active show">
                                             <div class="product__reviews">
                                                 <div class="product__reviews--header">
-                                                    <h3 class="product__reviews--header__title mb-20">Customer Reviews</h3>
+                                                    <h3 class="product__reviews--header__title mb-20">Отзывы пользователей</h3>
                                                     <div class="reviews__ratting d-flex align-items-center">
                                                         <ul class="rating d-flex">
                                                             <li class="rating__list">
@@ -455,17 +444,23 @@
                                                                 </span>
                                                             </li>
                                                         </ul>
-                                                        <span class="reviews__summary--caption">Based on 2 reviews</span>
+                                                        <span class="reviews__summary--caption">Отзывов {{product.product_comment.all.count  }}</span>
                                                     </div>
-                                                    <a class="actions__newreviews--btn primary__btn" href="product-left-sidebar.html#writereview">Write A Review</a>
                                                 </div>
                                                 <div class="reviews__comment--area">
+                                                    {% for comment in product.product_comment.all %}
                                                     <div class="reviews__comment--list d-flex">
+                                                        {% if user.profile_image %}
                                                         <div class="reviews__comment--thumbnail">
-                                                            <img src="assets/img/other/comment-thumb1.webp" alt="comment-thumbnail">
+                                                            <img src="{{ user.profile_image.url }}" alt="comment-thumbnail">
                                                         </div>
+                                                        {% else %}
+                                                        <div class="reviews__comment--thumbnail">
+                                                            <img src="https://thumbs.dreamstime.com/b/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482930.jpg" alt="comment-thumbnail">
+                                                        </div>
+                                                        {% endif %}
                                                         <div class="reviews__comment--content">
-                                                            <h4 class="reviews__comment--content__title">Richard Smith</h4>
+                                                            <h4 class="reviews__comment--content__title">{{ comment.user }}</h4>
                                                             <ul class="rating reviews__comment--rating d-flex mb-5">
                                                                 <li class="rating__list">
                                                                     <span class="rating__list--icon">
@@ -503,164 +498,28 @@
                                                                     </span>
                                                                 </li>
                                                             </ul>
-                                                            <p class="reviews__comment--content__desc">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eos ex repellat officiis neque. Veniam, rem nesciunt. Assumenda distinctio, autem error repellat eveniet ratione dolor facilis accusantium amet pariatur, non eius!</p>
-                                                            <span class="reviews__comment--content__date">January 11, 2022</span>
+                                                            <p class="reviews__comment--content__desc">{{ comment.message }}</p>
+                                                            <span class="reviews__comment--content__date">{{ comment.created }}</span>
                                                         </div>
                                                     </div>
-                                                    <div class="reviews__comment--list margin__left d-flex">
-                                                        <div class="reviews__comment--thumbnail">
-                                                            <img src="assets/img/other/comment-thumb2.webp" alt="comment-thumbnail">
-                                                        </div>
-                                                        <div class="reviews__comment--content">
-                                                            <h4 class="reviews__comment--content__title">Laura Johnson</h4>
-                                                            <ul class="rating reviews__comment--rating d-flex mb-5">
-                                                                <li class="rating__list">
-                                                                    <span class="rating__list--icon">
-                                                                        <svg class="rating__list--icon__svg" xmlns="http://www.w3.org/2000/svg" width="13.105" height="13.732" viewBox="0 0 10.105 9.732">
-                                                                        <path data-name="star - Copy" d="M9.837,3.5,6.73,3.039,5.338.179a.335.335,0,0,0-.571,0L3.375,3.039.268,3.5a.3.3,0,0,0-.178.514L2.347,6.242,1.813,9.4a.314.314,0,0,0,.464.316L5.052,8.232,7.827,9.712A.314.314,0,0,0,8.292,9.4L7.758,6.242l2.257-2.231A.3.3,0,0,0,9.837,3.5Z" transform="translate(0 -0.018)" fill="currentColor"></path>
-                                                                        </svg>
-                                                                    </span>
-                                                                </li>
-                                                                <li class="rating__list">
-                                                                    <span class="rating__list--icon">
-                                                                        <svg class="rating__list--icon__svg" xmlns="http://www.w3.org/2000/svg" width="13.105" height="13.732" viewBox="0 0 10.105 9.732">
-                                                                        <path data-name="star - Copy" d="M9.837,3.5,6.73,3.039,5.338.179a.335.335,0,0,0-.571,0L3.375,3.039.268,3.5a.3.3,0,0,0-.178.514L2.347,6.242,1.813,9.4a.314.314,0,0,0,.464.316L5.052,8.232,7.827,9.712A.314.314,0,0,0,8.292,9.4L7.758,6.242l2.257-2.231A.3.3,0,0,0,9.837,3.5Z" transform="translate(0 -0.018)" fill="currentColor"></path>
-                                                                        </svg>
-                                                                    </span>
-                                                                </li>
-                                                                <li class="rating__list">
-                                                                    <span class="rating__list--icon">
-                                                                        <svg class="rating__list--icon__svg" xmlns="http://www.w3.org/2000/svg" width="13.105" height="13.732" viewBox="0 0 10.105 9.732">
-                                                                        <path data-name="star - Copy" d="M9.837,3.5,6.73,3.039,5.338.179a.335.335,0,0,0-.571,0L3.375,3.039.268,3.5a.3.3,0,0,0-.178.514L2.347,6.242,1.813,9.4a.314.314,0,0,0,.464.316L5.052,8.232,7.827,9.712A.314.314,0,0,0,8.292,9.4L7.758,6.242l2.257-2.231A.3.3,0,0,0,9.837,3.5Z" transform="translate(0 -0.018)" fill="currentColor"></path>
-                                                                        </svg>
-                                                                    </span>
-                                                                </li>
-                                                                <li class="rating__list">
-                                                                    <span class="rating__list--icon">
-                                                                        <svg class="rating__list--icon__svg" xmlns="http://www.w3.org/2000/svg" width="13.105" height="13.732" viewBox="0 0 10.105 9.732">
-                                                                        <path data-name="star - Copy" d="M9.837,3.5,6.73,3.039,5.338.179a.335.335,0,0,0-.571,0L3.375,3.039.268,3.5a.3.3,0,0,0-.178.514L2.347,6.242,1.813,9.4a.314.314,0,0,0,.464.316L5.052,8.232,7.827,9.712A.314.314,0,0,0,8.292,9.4L7.758,6.242l2.257-2.231A.3.3,0,0,0,9.837,3.5Z" transform="translate(0 -0.018)" fill="currentColor"></path>
-                                                                        </svg>
-                                                                    </span>
-                                                                </li>
-                                                                <li class="rating__list">
-                                                                    <span class="rating__list--icon">
-                                                                        <svg class="rating__list--icon__svg" xmlns="http://www.w3.org/2000/svg" width="13.105" height="13.732" viewBox="0 0 10.105 9.732">
-                                                                        <path data-name="star - Copy" d="M9.837,3.5,6.73,3.039,5.338.179a.335.335,0,0,0-.571,0L3.375,3.039.268,3.5a.3.3,0,0,0-.178.514L2.347,6.242,1.813,9.4a.314.314,0,0,0,.464.316L5.052,8.232,7.827,9.712A.314.314,0,0,0,8.292,9.4L7.758,6.242l2.257-2.231A.3.3,0,0,0,9.837,3.5Z" transform="translate(0 -0.018)" fill="currentColor"></path>
-                                                                        </svg>
-                                                                    </span>
-                                                                </li>
-                                                            </ul>
-                                                            <p class="reviews__comment--content__desc">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eos ex repellat officiis neque. Veniam, rem nesciunt. Assumenda distinctio, autem error repellat eveniet ratione dolor facilis accusantium amet pariatur, non eius!</p>
-                                                            <span class="reviews__comment--content__date">January 11, 2022</span>
-                                                        </div>
+                                                    {% endfor %}
+                                                    {% if user.is_authenticated %}
+                                                    <div class="card-footer p-0 d-flex">
+                                                        <form method="post" class="form-control">
+                                                            {% csrf_token %}
+                                                            <input type="hidden" name="product_id" value="{{ product.id }}">
+                                                            <input type="text" name="comment_message" class="form-control"
+                                                                   placeholder="Оставьте комментарии..." style="width: 400px; height: 200px;">
+                                                            <button type="submit" name="comment" class="btn btn-danger">
+                                                                Comment
+                                                            </button>
+                                                        </form>
                                                     </div>
-                                                    <div class="reviews__comment--list d-flex">
-                                                        <div class="reviews__comment--thumbnail">
-                                                            <img src="assets/img/other/comment-thumb3.webp" alt="comment-thumbnail">
-                                                        </div>
-                                                        <div class="reviews__comment--content">
-                                                            <h4 class="reviews__comment--content__title">Richard Smith</h4>
-                                                            <ul class="rating reviews__comment--rating d-flex mb-5">
-                                                                <li class="rating__list">
-                                                                    <span class="rating__list--icon">
-                                                                        <svg class="rating__list--icon__svg" xmlns="http://www.w3.org/2000/svg" width="13.105" height="13.732" viewBox="0 0 10.105 9.732">
-                                                                        <path data-name="star - Copy" d="M9.837,3.5,6.73,3.039,5.338.179a.335.335,0,0,0-.571,0L3.375,3.039.268,3.5a.3.3,0,0,0-.178.514L2.347,6.242,1.813,9.4a.314.314,0,0,0,.464.316L5.052,8.232,7.827,9.712A.314.314,0,0,0,8.292,9.4L7.758,6.242l2.257-2.231A.3.3,0,0,0,9.837,3.5Z" transform="translate(0 -0.018)" fill="currentColor"></path>
-                                                                        </svg>
-                                                                    </span>
-                                                                </li>
-                                                                <li class="rating__list">
-                                                                    <span class="rating__list--icon">
-                                                                        <svg class="rating__list--icon__svg" xmlns="http://www.w3.org/2000/svg" width="13.105" height="13.732" viewBox="0 0 10.105 9.732">
-                                                                        <path data-name="star - Copy" d="M9.837,3.5,6.73,3.039,5.338.179a.335.335,0,0,0-.571,0L3.375,3.039.268,3.5a.3.3,0,0,0-.178.514L2.347,6.242,1.813,9.4a.314.314,0,0,0,.464.316L5.052,8.232,7.827,9.712A.314.314,0,0,0,8.292,9.4L7.758,6.242l2.257-2.231A.3.3,0,0,0,9.837,3.5Z" transform="translate(0 -0.018)" fill="currentColor"></path>
-                                                                        </svg>
-                                                                    </span>
-                                                                </li>
-                                                                <li class="rating__list">
-                                                                    <span class="rating__list--icon">
-                                                                        <svg class="rating__list--icon__svg" xmlns="http://www.w3.org/2000/svg" width="13.105" height="13.732" viewBox="0 0 10.105 9.732">
-                                                                        <path data-name="star - Copy" d="M9.837,3.5,6.73,3.039,5.338.179a.335.335,0,0,0-.571,0L3.375,3.039.268,3.5a.3.3,0,0,0-.178.514L2.347,6.242,1.813,9.4a.314.314,0,0,0,.464.316L5.052,8.232,7.827,9.712A.314.314,0,0,0,8.292,9.4L7.758,6.242l2.257-2.231A.3.3,0,0,0,9.837,3.5Z" transform="translate(0 -0.018)" fill="currentColor"></path>
-                                                                        </svg>
-                                                                    </span>
-                                                                </li>
-                                                                <li class="rating__list">
-                                                                    <span class="rating__list--icon">
-                                                                        <svg class="rating__list--icon__svg" xmlns="http://www.w3.org/2000/svg" width="13.105" height="13.732" viewBox="0 0 10.105 9.732">
-                                                                        <path data-name="star - Copy" d="M9.837,3.5,6.73,3.039,5.338.179a.335.335,0,0,0-.571,0L3.375,3.039.268,3.5a.3.3,0,0,0-.178.514L2.347,6.242,1.813,9.4a.314.314,0,0,0,.464.316L5.052,8.232,7.827,9.712A.314.314,0,0,0,8.292,9.4L7.758,6.242l2.257-2.231A.3.3,0,0,0,9.837,3.5Z" transform="translate(0 -0.018)" fill="currentColor"></path>
-                                                                        </svg>
-                                                                    </span>
-                                                                </li>
-                                                                <li class="rating__list">
-                                                                    <span class="rating__list--icon">
-                                                                        <svg class="rating__list--icon__svg" xmlns="http://www.w3.org/2000/svg" width="13.105" height="13.732" viewBox="0 0 10.105 9.732">
-                                                                        <path data-name="star - Copy" d="M9.837,3.5,6.73,3.039,5.338.179a.335.335,0,0,0-.571,0L3.375,3.039.268,3.5a.3.3,0,0,0-.178.514L2.347,6.242,1.813,9.4a.314.314,0,0,0,.464.316L5.052,8.232,7.827,9.712A.314.314,0,0,0,8.292,9.4L7.758,6.242l2.257-2.231A.3.3,0,0,0,9.837,3.5Z" transform="translate(0 -0.018)" fill="currentColor"></path>
-                                                                        </svg>
-                                                                    </span>
-                                                                </li>
-                                                            </ul>
-                                                            <p class="reviews__comment--content__desc">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eos ex repellat officiis neque. Veniam, rem nesciunt. Assumenda distinctio, autem error repellat eveniet ratione dolor facilis accusantium amet pariatur, non eius!</p>
-                                                            <span class="reviews__comment--content__date">January 11, 2022</span>
-                                                        </div>
+                                                    {% else %}
+                                                    <div class="card-footer p-0 d-flex">
+                                                        <h4>Зарегистрируйтесь чтобы оставлять комментарии</h4>
                                                     </div>
-                                                </div>
-                                                <div id="writereview" class="reviews__comment--reply__area">
-                                                    <form action="product-left-sidebar.html#">
-                                                        <h3 class="reviews__comment--reply__title mb-15">Add a review </h3>
-                                                        <div class="reviews__ratting d-flex align-items-center mb-20">
-                                                            <ul class="rating d-flex">
-                                                                <li class="rating__list">
-                                                                    <span class="rating__list--icon">
-                                                                        <svg class="rating__list--icon__svg" xmlns="http://www.w3.org/2000/svg" width="13.105" height="13.732" viewBox="0 0 10.105 9.732">
-                                                                        <path data-name="star - Copy" d="M9.837,3.5,6.73,3.039,5.338.179a.335.335,0,0,0-.571,0L3.375,3.039.268,3.5a.3.3,0,0,0-.178.514L2.347,6.242,1.813,9.4a.314.314,0,0,0,.464.316L5.052,8.232,7.827,9.712A.314.314,0,0,0,8.292,9.4L7.758,6.242l2.257-2.231A.3.3,0,0,0,9.837,3.5Z" transform="translate(0 -0.018)" fill="currentColor"></path>
-                                                                        </svg>
-                                                                    </span>
-                                                                </li>
-                                                                <li class="rating__list">
-                                                                    <span class="rating__list--icon">
-                                                                        <svg class="rating__list--icon__svg" xmlns="http://www.w3.org/2000/svg" width="13.105" height="13.732" viewBox="0 0 10.105 9.732">
-                                                                        <path data-name="star - Copy" d="M9.837,3.5,6.73,3.039,5.338.179a.335.335,0,0,0-.571,0L3.375,3.039.268,3.5a.3.3,0,0,0-.178.514L2.347,6.242,1.813,9.4a.314.314,0,0,0,.464.316L5.052,8.232,7.827,9.712A.314.314,0,0,0,8.292,9.4L7.758,6.242l2.257-2.231A.3.3,0,0,0,9.837,3.5Z" transform="translate(0 -0.018)" fill="currentColor"></path>
-                                                                        </svg>
-                                                                    </span>
-                                                                </li>
-                                                                <li class="rating__list">
-                                                                    <span class="rating__list--icon">
-                                                                        <svg class="rating__list--icon__svg" xmlns="http://www.w3.org/2000/svg" width="13.105" height="13.732" viewBox="0 0 10.105 9.732">
-                                                                        <path data-name="star - Copy" d="M9.837,3.5,6.73,3.039,5.338.179a.335.335,0,0,0-.571,0L3.375,3.039.268,3.5a.3.3,0,0,0-.178.514L2.347,6.242,1.813,9.4a.314.314,0,0,0,.464.316L5.052,8.232,7.827,9.712A.314.314,0,0,0,8.292,9.4L7.758,6.242l2.257-2.231A.3.3,0,0,0,9.837,3.5Z" transform="translate(0 -0.018)" fill="currentColor"></path>
-                                                                        </svg>
-                                                                    </span>
-                                                                </li>
-                                                                <li class="rating__list">
-                                                                    <span class="rating__list--icon">
-                                                                        <svg class="rating__list--icon__svg" xmlns="http://www.w3.org/2000/svg" width="13.105" height="13.732" viewBox="0 0 10.105 9.732">
-                                                                        <path data-name="star - Copy" d="M9.837,3.5,6.73,3.039,5.338.179a.335.335,0,0,0-.571,0L3.375,3.039.268,3.5a.3.3,0,0,0-.178.514L2.347,6.242,1.813,9.4a.314.314,0,0,0,.464.316L5.052,8.232,7.827,9.712A.314.314,0,0,0,8.292,9.4L7.758,6.242l2.257-2.231A.3.3,0,0,0,9.837,3.5Z" transform="translate(0 -0.018)" fill="currentColor"></path>
-                                                                        </svg>
-                                                                    </span>
-                                                                </li>
-                                                                <li class="rating__list">
-                                                                    <span class="rating__list--icon">
-                                                                        <svg class="rating__list--icon__svg" xmlns="http://www.w3.org/2000/svg" width="13.105" height="13.732" viewBox="0 0 10.105 9.732">
-                                                                        <path data-name="star - Copy" d="M9.837,3.5,6.73,3.039,5.338.179a.335.335,0,0,0-.571,0L3.375,3.039.268,3.5a.3.3,0,0,0-.178.514L2.347,6.242,1.813,9.4a.314.314,0,0,0,.464.316L5.052,8.232,7.827,9.712A.314.314,0,0,0,8.292,9.4L7.758,6.242l2.257-2.231A.3.3,0,0,0,9.837,3.5Z" transform="translate(0 -0.018)" fill="currentColor"></path>
-                                                                        </svg>
-                                                                    </span>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-12 mb-10">
-                                                                <textarea class="reviews__comment--reply__textarea" placeholder="Your Comments...." ></textarea>
-                                                            </div> 
-                                                            <div class="col-lg-6 col-md-6 mb-15">
-                                                                <label>
-                                                                    <input class="reviews__comment--reply__input" placeholder="Your Name...." type="text">
-                                                                </label>
-                                                            </div>  
-                                                            <div class="col-lg-6 col-md-6 mb-15">
-                                                                <label>
-                                                                    <input class="reviews__comment--reply__input" placeholder="Your Email...." type="email">
-                                                                </label>
-                                                            </div>  
-                                                        </div>
-                                                        <button class="text-white primary__btn" data-hover="Submit" type="submit">SUBMIT</button>
-                                                    </form>   
+                                                    {% endif %}
                                                 </div> 
                                             </div>    
                                         </div>
