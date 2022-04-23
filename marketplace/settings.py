@@ -46,10 +46,12 @@ INSTALLED_APPS = [
     'apps.settings',
     'apps.users',
     'apps.cart',
+    'apps.contact', 
 
     # Add the following django-allauth apps
     'allauth',
     'allauth.account',
+
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google', # for Google OAuth 2.0
 ]
