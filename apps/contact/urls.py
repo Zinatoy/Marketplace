@@ -5,5 +5,3 @@ urlpatterns = [
     path('contact/', contact, name = "contact"),
     path('thank_you/', thank_you, name = "thank_you"), 
 ]
-
-urlpatterns+=static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

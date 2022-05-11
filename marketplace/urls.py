@@ -27,7 +27,7 @@ urlpatterns = [
     path('', include('apps.categories.urls')),
     path('', include('apps.users.urls')),
     path('', include('apps.cart.urls')),
-    # path('', include('apps.contact.urls')),
+    path('', include('apps.contact.urls')),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('accounts/', include('allauth.urls')),
 ]
